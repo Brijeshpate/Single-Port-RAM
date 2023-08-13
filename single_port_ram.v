@@ -14,4 +14,5 @@ else
 address_register <= ram_address;
 end
 assign data_out = ram_memory[address_register];
+  
 endmodule
