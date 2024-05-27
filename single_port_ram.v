@@ -1,18 +1,28 @@
-module single_port_ram(data_in , ram_address,write_enable,clk,data_out);
+`timescale 1ns/1ps
+
+module sdram(data_out,data_in,ram_addr,write_en,clk);
+input clk,write_en;
 input [7:0]data_in;
-input [5:0] ram_address;
-input write_enable;
-input clk;
+input [5:0]ram_addr;
 output [7:0]data_out;
-reg [7:0] ram_memory[31:0]; // a 32 byte ( 32*8 bit) RAM
-reg [5:0] address_register;
+
+reg [7:0]memory[31:0];  //memory 
+reg [5:0]addr_register; //address buffer
+
+initial
+begin
+
+end
+
 always @(posedge clk)
 begin
-if (write_enable) // write operation
-ram_memory[ram_address] <= data_in;
-else
-address_register <= ram_address;
+	if(write_en)
+		memory[ram_addr] <= data_in;
+	else
+		addr_register <= ram_addr;
 end
-assign data_out = ram_memory[address_register];
-  
+
+assign data_out = memory[ram_addr];
 endmodule
+
+
